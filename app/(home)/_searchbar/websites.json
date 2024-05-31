@@ -1,0 +1,146 @@
+[
+    {
+        "name": "Google",
+        "url" : "https://www.google.com",
+        "SearchURL": "https://www.google.com/search?q=",
+        "colorTheme": "#FABB05"
+    },
+    {
+        "name": "Facebook",
+        "url" : "https://www.facebook.com",
+        "SearchURL": "https://www.facebook.com/search/top/?q=",
+        "colorTheme": "#316FF6"
+    },
+    {
+        "name": "Twitter",
+        "url" : "https://www.twitter.com",
+        "SearchURL": "https://www.twitter.com/search?q=",
+        "colorTheme": "#1da1f2"
+    },
+    {
+        "name": "LinkedIn",
+        "url" : "https://www.linkedin.com",
+        "SearchURL": "https://www.linkedin.com/search/results/all/?keywords=",
+        "colorTheme": "#0077b5"
+    },
+    {
+        "name": "YouTube",
+        "url" : "https://www.youtube.com",
+        "SearchURL": "https://www.youtube.com/results?search_query=",
+        "colorTheme": "#FF0000"
+    },
+    {
+        "name": "Instagram",
+        "url" : "https://www.instagram.com",
+        "SearchURL": "https://www.instagram.com/explore/tags/",
+        "colorTheme": "#F70262"
+    },
+    {
+        "name": "Pinterest",
+        "url" : "https://www.pinterest.com",
+        "SearchURL": "https://www.pinterest.com/search/pins/?q=",
+        "colorTheme": "#b7081b"
+    },
+    {
+        "name": "Twitch",
+        "url" : "https://www.twitch.tv",
+        "SearchURL": "https://www.twitch.tv/",
+        "colorTheme": "#9670DC"
+    },
+    {
+        "name": "Reddit",
+        "url" : "https://www.reddit.com",
+        "SearchURL": "https://www.reddit.com/search/?q",
+        "colorTheme": "#F72617"
+    },
+    {
+        "name": "Amazon",
+        "url" : "https://www.amazon.com",
+        "SearchURL": "https://www.amazon.com/s?k=",
+        "colorTheme": "#ff9600"
+    },
+    {
+        "name": "Wikipedia",
+        "url" : "https://www.wikipedia.org",
+        "SearchURL": "https://en.wikipedia.org/wiki/",
+        "colorTheme": "#000000"
+    },
+    {
+        "name": "Spotify",
+        "url" : "https://www.spotify.com",
+        "SearchURL": "https://open.spotify.com/search/",
+        "colorTheme": "#09d659"
+    },
+    {
+        "name": "Netflix",
+        "url" : "https://www.netflix.com",
+        "SearchURL": "https://www.netflix.com/search?q=",
+        "colorTheme": "#de0912"
+    },
+    {
+        "name": "ChatGpt",
+        "url" : "https://www.chatgpt.com",
+        "SearchURL": "https://www.chatgpt.com/search?q=",
+        "colorTheme":"#78ad9f"
+    },
+    {
+        "name": "Gmail",
+        "url" : "https://mail.google.com",
+        "SearchURL": "https://mail.google.com/mail/u/0/#search/",
+        "colorTheme": "#34a853"
+    },
+    {
+        "name":"Github",
+        "url":"https://github.com",
+        "SearchURL":"https://github.com/search?q=",
+        "colorTheme":"#010409"
+    },
+    {
+        "name":"Monkeytype",
+        "url":"https://monkeytype.com",
+        "SearchURL":"https://monkeytype.com/",
+        "colorTheme":"#e2b718"
+    },
+    {
+        "name":"Medium",
+        "url":"https://medium.com",
+        "SearchURL":"https://medium.com/search?q=",
+        "colorTheme":"#292929"
+    },
+    {
+        "name" : "Notion",
+        "url" : "https://www.notion.so",
+        "SearchURL": "https://www.notion.so",
+        "colorTheme": "#000000"
+    },
+    {
+        "name":"Slack",
+        "url":"https://slack.com",
+        "SearchURL":"https://slack.com",
+        "colorTheme":"#1da1f2"
+    },
+    {
+        "name" : "Whatsapp",
+        "url" : "https://web.whatsapp.com",
+        "SearchURL": "https://web.whatsapp.com",
+        "colorTheme": "#46ca57"
+    },
+    {
+        "name" : "Discord",
+        "url" : "https://discord.com",
+        "SearchURL": "https://discord.com",
+        "colorTheme": "#5765f2"
+    },
+    {
+        "name" : "Zoom",
+        "url" : "https://zoom.us",
+        "SearchURL": "https://zoom.us",
+        "colorTheme": "#298dff"
+    },
+    {
+        "name" : "Quora",
+        "url" : "https://www.quora.com",
+        "SearchURL": "https://www.quora.com/search?q=",
+        "colorTheme": "#ba2722"
+    }
+]

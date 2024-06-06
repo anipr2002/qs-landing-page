@@ -7,73 +7,55 @@ import Intro from "./_components/Intro";
 import SearchBar from "./_searchbar/SearchBar";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useMouseStore } from "@/app/store/mouse";
+// import { useMouseStore } from "@/app/store/mouse";
+import { SparklesCore } from "@/components/ui/sparkles";
+import SearchBarAuto from "./_searchbar/SearchBarAuto";
+import useStore from "../store/store";
+import { simulateWordInput, simulateQueryInput } from "../utils/keypress";
 
 const Mainpage = () => {
-  const [tryNow, setTryNow] = useState(true);
-
   const {
-    mousePosition,
-    setMousePosition,
-    cursorVariant,
-    setCursorVariant,
-    cursorText,
-    setCursorText,
-  } = useMouseStore();
+    autoplay,
+    setAutoplay,
+    setMatchedWebsite,
+    setSearchQuery,
+    setTabPressed,
+    setWebsiteName,
+    inputRef,
+  } = useStore();
+  const resetData = () => {
+    // setAutoplay(false);
+    setMatchedWebsite(null);
+    setSearchQuery("");
+    setTabPressed(false);
+    setWebsiteName("");
+  };
 
-  useEffect(() => {
-    window.addEventListener("mousemove", (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    });
-
-    return () => {
-      window.removeEventListener("mousemove", (e) => {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-      });
-    };
-  }, []);
-
-  const variants = {
-    default: { x: mousePosition.x - 16, y: mousePosition.y - 16 },
-    text: {
-      backgroundColor: "#f87116",
-      mixBlendMode: "difference",
-      x: mousePosition.x - 100,
-      y: mousePosition.y - 100,
-      height: 200,
-      width: 200,
-    },
-    search: {
-      opacity: 1,
-      backgroundColor: "#ffffff",
-      color: "#fff",
-      height: 80,
-      width: 80,
-      fontSize: "18px",
-      border: "4px white solid",
-      x: mousePosition.x - 32,
-      y: mousePosition.y - 32,
-    },
+  const simulateFunction = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Delay before starting simulation
+    await simulateWordInput(inputRef, "Youtube");
+    await simulateQueryInput(inputRef, "Rick Roll");
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    resetData();
+    await simulateWordInput(inputRef, "Google");
+    await simulateQueryInput(inputRef, "What is the weather today?");
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    resetData();
+    await simulateWordInput(inputRef, "Netflix");
+    await simulateQueryInput(inputRef, "Stranger Things");
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    resetData();
+    await simulateWordInput(inputRef, "Spotify");
+    await simulateQueryInput(inputRef, "Best of 2021");
   };
 
   return (
     <>
       <MaxWidthWrapper
-        classname="mb-12 mt-28 sm:mt-40 flex flex-col
+        classname="mb-12 mt-28 sm:mt-40 flex flex-col 
        cursor-default items-center justify-center text-center"
       >
         <Intro />
-        <motion.div
-          className="bg-black h-[32px] w-[32px] flex justify-center items-center
-                rounded-[50%] fixed top-0 left-0 pointer-events-none z-20"
-          variants={variants as any}
-          animate={cursorVariant}
-          transition={{ type: "tween", ease: "backOut" }}
-        >
-          <span className={"font-aber text-center text-orange-500"}>
-            {cursorText}
-          </span>
-        </motion.div>
       </MaxWidthWrapper>
       <div>
         <div className="relative isolate">
@@ -91,37 +73,36 @@ const Mainpage = () => {
           </div>
         </div>
       </div>
-      <MaxWidthWrapper>
-        {!tryNow && <SearchBar />}
-        {tryNow && (
-          <div
-            className="w-full h-fit flex flex-col justify-center items-center"
+      <MaxWidthWrapper classname="">
+        <div className="relative">
+          <div className="w-full h-fit flex items-center justify-center absolute top-[0] left-0 z-[-1]">
+            <SparklesCore
+              background="transparent"
+              minSize={0.4}
+              maxSize={1}
+              particleDensity={1200}
+              className="w-[60%] h-[100px]"
+              particleColor="#fff"
+            />
+          </div>
+          {!autoplay && <SearchBar />}
+          {autoplay && <SearchBarAuto />}
+        </div>
+
+        <div className="w-full flex justify-center mt-10">
+          <Button
             onClick={() => {
-              setTryNow(!tryNow);
-              setCursorText("");
-              setCursorVariant("default");
-            }}
-            onMouseEnter={() => {
-              setCursorText("Try Now");
-              setCursorVariant("search");
-            }}
-            onMouseLeave={() => {
-              setCursorText("");
-              setCursorVariant("default");
+              setAutoplay(!autoplay);
+              if (autoplay) {
+                resetData();
+              }
+              if (!autoplay) {
+                simulateFunction();
+              }
             }}
           >
-            <video
-              autoPlay
-              loop
-              muted
-              className="w-[60%] h-22 bg-transparent flex items-center justify-center mt-[-10px]"
-            >
-              <source src="/video.mp4" />
-            </video>
-          </div>
-        )}
-        <div className="w-full flex justify-center mt-10">
-          <Button onClick={() => setTryNow(!tryNow)}>Click here to try</Button>
+            {autoplay ? "Try Now" : "See Demo"}
+          </Button>
         </div>
 
         <Download />

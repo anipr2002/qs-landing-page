@@ -1,0 +1,313 @@
+import React, { useEffect, useRef } from "react";
+import { Search } from "lucide-react";
+import { MdOutlineKeyboardTab } from "react-icons/md";
+import Icons from "./ui/Icons";
+import SmIcons from "./ui/SmIcon";
+import websiteData from "./websites.json";
+import { Website } from "./types/website";
+import useStore from "../../store/store";
+import { getAutocompleteSuggestions } from "./autocompleteHelper";
+import { simulateWordInput } from "@/app/utils/keypress";
+const SearchBarAuto = () => {
+  const {
+    websiteName,
+    colorTheme,
+    setSearchQuery,
+    setWebsiteName,
+    searchQuery,
+    tabpressed,
+    setTabPressed,
+    setColorTheme,
+    matchedWebsite,
+    setMatchedWebsite,
+    autoplay,
+    inputRef,
+  } = useStore();
+
+  const getColorTheme = (websiteName: string): void => {
+    const website: Website = websiteData.find(
+      (website) => website.name.toLowerCase() === websiteName.toLowerCase()
+    ) as Website;
+
+    if (website) {
+      setColorTheme(website.colorTheme);
+    } else {
+      setColorTheme("#8D9093");
+    }
+  };
+
+  const addPlusBetweenWords = (searchQuery: string): string => {
+    return searchQuery.split(" ").join("+");
+  };
+
+  const removePlusBetweenWords = (searchQuery: string): string => {
+    return searchQuery.split("+").join(" ");
+  };
+
+  const handleKeyPress = async (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ): Promise<void> => {
+    // const isMinimized = await appWindow.isMinimized();
+    if (e.key === "Tab" && !tabpressed) {
+      e.preventDefault();
+      handleTabPress();
+    } else if (e.key === "Escape") {
+      if (!tabpressed) {
+        // await appWindow.minimize();
+        resetData();
+      }
+      resetData();
+      inputRef.current?.focus();
+    } else if (e.key === "Enter") {
+      redirectToWebsite();
+      //   if (!isMinimized) appWindow.minimize();
+      resetData();
+    } else if (e.key === "Backspace") {
+      setMatchedWebsite(null);
+    } else if (e.key === "Enter" && searchQuery === "") {
+      redirectToWebsiteName();
+      resetData();
+      //   if (!isMinimized) appWindow.minimize();
+
+      resetData();
+    }
+  };
+
+  const resetData = (): void => {
+    setTabPressed(false);
+    setWebsiteName("");
+    setSearchQuery("");
+    setMatchedWebsite(null);
+    setColorTheme("#8D9093");
+  };
+
+  const handleTabPress = (): void => {
+    setTabPressed(true);
+
+    const partialName = inputRef.current?.value as string;
+
+    if (partialName.length > 2) {
+      const suggestions = getAutocompleteSuggestions({
+        websiteData,
+        input: partialName,
+      });
+
+      const matched = suggestions.length > 0 ? suggestions[0] : null;
+
+      if (matched) {
+        // Set the completed website name
+        setWebsiteName(addPlusBetweenWords(matched.name));
+        // Set the color theme based on the completed website name
+        getColorTheme(matched.colorTheme as string);
+        // console.log(colorTheme);
+        setMatchedWebsite(null);
+      }
+
+      //if no matched website, set the website name to Google and partial name to search query
+      if (!matched) {
+        setWebsiteName("google");
+        setColorTheme("google");
+        setSearchQuery(websiteName);
+      }
+    } else if (partialName.length <= 2) {
+      setWebsiteName("google");
+      setColorTheme("google");
+      setSearchQuery(addPlusBetweenWords(partialName));
+    }
+
+    inputRef.current?.focus();
+    getColorTheme(inputRef.current?.value as string);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const partialName = e.target.value.toLowerCase();
+
+    // Find a unique partial match in the website names from the JSON data if partialName.length > 3
+    if (partialName.length > 2) {
+      const matched = websiteData.find((website) =>
+        website.name.toLowerCase().startsWith(partialName)
+      );
+
+      setMatchedWebsite(matched || null);
+      setWebsiteName(addPlusBetweenWords(e.target.value));
+    }
+  };
+
+  //useEffect for color theme
+  useEffect(() => {
+    getColorTheme(websiteName);
+  }, [websiteName]);
+
+  //useEffect for tab to matched website
+
+  const constructWebsiteURL = (
+    SearchURL: string,
+    searchQuery: string
+  ): string => {
+    const website: Website = websiteData.find(
+      (website) => website.name.toLowerCase() === SearchURL.toLowerCase()
+    ) as Website;
+    if (website) {
+      return website.SearchURL + searchQuery;
+    } else {
+      return "https://www.google.com/search?q=" + websiteName + searchQuery;
+    }
+  };
+
+  const contructWebsiteName = (websiteName: string): string => {
+    const website: Website = websiteData.find(
+      (website) => website.name.toLowerCase() === websiteName.toLowerCase()
+    ) as Website;
+    if (website) {
+      return website.url;
+    } else {
+      return "https://www.google.com/search?q=" + websiteName;
+    }
+  };
+
+  const isValidWebsiteName = (websiteName: string): boolean => {
+    return websiteName.trim() !== "";
+  };
+
+  const redirectToWebsite = (): void => {
+    if (isValidWebsiteName(websiteName)) {
+      const searchURL: string = constructWebsiteURL(websiteName, searchQuery);
+      window.open(searchURL, "_blank");
+    } else {
+      const searchURL: string = constructWebsiteURL("google", websiteName);
+      setColorTheme("#8D9093");
+      window.open(searchURL, "_blank");
+      alert("Please enter a valid website name");
+      console.error("Please enter a valid website name");
+    }
+  };
+
+  const redirectToWebsiteName = (): void => {
+    if (isValidWebsiteName(websiteName)) {
+      const websiteURL: string = contructWebsiteName(websiteName);
+      window.open(websiteURL, "_blank");
+    } else {
+      const websiteURL: string = contructWebsiteName("google");
+      setColorTheme("#8D9093");
+      window.open(websiteURL, "_blank");
+      alert("Please enter a valid website name");
+      console.error("Please enter a valid website name");
+    }
+  };
+
+  //   useEffect(() => {
+  //     if (autoplay) {
+  //       simulateWordInput(inputRef, "Netflix");
+  //     }
+  //   }, [autoplay]);
+
+  return (
+    <div className="w-full h-fit flex flex-col justify-center items-center">
+      <div className="w-[60%] h-full bg-transparent flex items-center justify-center">
+        <div
+          className="w-full h-20 grainy rounded-xl gap-5 flex items-center px-4 bg-[#0B1215]/95"
+          style={{
+            boxShadow: `0 0 5px ${colorTheme}, 0 0 15px ${colorTheme}`,
+          }}
+        >
+          {!tabpressed && !matchedWebsite && (
+            <div className="ml-4">
+              <Search size={24} color="white" />
+            </div>
+          )}
+          {!tabpressed && matchedWebsite && (
+            <div className="ml-4" style={{ color: matchedWebsite.colorTheme }}>
+              <Icons name={matchedWebsite.name.toLowerCase()} size={24} />
+            </div>
+          )}
+
+          {!tabpressed && (
+            <>
+              <div className="h-full w-full flex ">
+                <input
+                  type="text"
+                  placeholder="Enter Website"
+                  className="w-full h-full flex-1 p-2 bg-transparent outline-none font-medium text-white text-xl"
+                  onKeyDown={handleKeyPress}
+                  onChange={(e) => {
+                    setWebsiteName(addPlusBetweenWords(e.target.value));
+                    handleInputChange(e);
+                    if (e.target.value === "") {
+                      setMatchedWebsite(null);
+                    }
+                    // resetData();
+                  }}
+                  //   value={inputValWebsiteName}
+                  ref={inputRef}
+                  autoFocus
+                />
+                <div className="h-full w-fit flex items-center">
+                  {matchedWebsite && (
+                    <>
+                      <span
+                        className={"mr-2 font-mono"}
+                        style={{ color: matchedWebsite.colorTheme }}
+                      >
+                        Search {matchedWebsite.name}
+                      </span>
+                      <div style={{ color: matchedWebsite.colorTheme }}>
+                        <MdOutlineKeyboardTab />
+                      </div>
+                    </>
+                  )}
+                  {!matchedWebsite && (
+                    <>
+                      <span className={"mr-2 text-white/70"}>
+                        Tab to Search
+                      </span>
+                      <div className="text-white/70">
+                        <MdOutlineKeyboardTab />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* This when the website name is entered */}
+          {tabpressed && (
+            <>
+              {/* This is the website name section */}
+              <div
+                className={`w-fit h-fit border border-white/5 text-white rounded-xl flex items-center ml-6`}
+                style={{
+                  backgroundColor: colorTheme,
+                  boxShadow: `0 0 5px ${colorTheme}, 0 0 15px ${colorTheme}`,
+                }}
+              >
+                <span className="pl-2">
+                  <SmIcons name={websiteName.toLowerCase()} />
+                </span>
+                <h1 className="p-2 font-medium">{websiteName}</h1>
+              </div>
+
+              {/* This is the search query section */}
+              <div className="flex-1">
+                <input
+                  type="text"
+                  ref={inputRef}
+                  autoFocus
+                  //   value={inputValSearchQuery}
+                  onKeyDown={handleKeyPress}
+                  placeholder={`Search ${websiteName}`}
+                  onChange={(e) => {
+                    setSearchQuery(addPlusBetweenWords(e.target.value));
+                  }}
+                  className="w-full h-full p-2 bg-transparent outline-none text-white text-xl"
+                />
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SearchBarAuto;

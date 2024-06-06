@@ -5,10 +5,10 @@ import { RoughNotation } from "react-rough-notation";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
-import { useMouseStore } from "@/app/store/mouse";
+// import { useMouseStore } from "@/app/store/mouse";
 const Intro = () => {
   const { toast } = useToast();
-  const { setCursorVariant } = useMouseStore();
+  // const { setCursorVariant } = useMouseStore();
 
   useEffect(() => {
     console.log("toast");
@@ -25,11 +25,7 @@ const Intro = () => {
   return (
     <>
       <Badge text="🎉 Introduing Quick Surf!" />
-      <h1
-        className="max-w-4xl text-5xl font-anthroSemibold md:text-6xl "
-        onMouseEnter={() => setCursorVariant("text")}
-        onMouseLeave={() => setCursorVariant("default")}
-      >
+      <h1 className="text-white max-w-4xl text-5xl font-anthroSemibold md:text-6xl ">
         Discover the Web Faster with{" "}
         <span
           className="text-orange-500/20
@@ -40,7 +36,7 @@ const Intro = () => {
           </RoughNotation>
         </span>
       </h1>
-      <p className="mt-5 font-semibold max-w-prose text-zinc-700/50 sm:text-lg font-anthroBook">
+      <p className="mt-5 font-semibold max-w-prose text-zinc-400 sm:text-lg font-anthroBook">
         Introducing Quick Surf – your gateway to instant browsing. With our
         innovative search bar, simply type the website name, press tab, enter
         your query, and watch as the page opens in a flash.

@@ -2,6 +2,7 @@
 
 import {create} from 'zustand';
 import {Website} from '../(home)/_searchbar/types/website';
+import React from 'react';
 
 interface Store {
     colorTheme: string;
@@ -16,7 +17,9 @@ interface Store {
     setWebsiteName: (name: string) => void;
     setSearchQuery: (query: string) => void;
     setTabPressed: (pressed: boolean) => void;
-
+    autoplay: boolean;
+    setAutoplay: (autoplay: boolean) => void;
+    inputRef: React.RefObject<HTMLInputElement>;
 }
 
 //create store
@@ -33,6 +36,9 @@ const useStore  = create<Store>((set) => ({
     setWebsiteName: (name: string) => set({ websiteName: name }),
     setSearchQuery: (query: string) => set({ searchQuery: query }),
     setTabPressed: (pressed: boolean) => set({ tabpressed: pressed }),
+    autoplay: false,
+    setAutoplay: (autoplay: boolean) => set({ autoplay }),
+    inputRef: React.createRef<HTMLInputElement>(),
 }));
 
 

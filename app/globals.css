@@ -3,6 +3,20 @@
   @tailwind utilities;
 
 
+ body{
+  background: black;
+ }
+
+ ::-moz-selection { /* Code for Firefox */
+  color: white;
+  background: #f97316;
+}
+
+::selection {
+  color: white;
+  background: #f97316;
+}
+
   @layer base {
     :root {
       --background: 0 0% 100%;

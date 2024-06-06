@@ -36,12 +36,12 @@ const Intro = () => {
             `inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`
           )}
         >
-          Introducing Magic UI
+          Introducing Quick Surf!
         </span>
         <ChevronRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
       </AnimatedGradientText>
 
-      <h1 className="text-white max-w-4xl text-5xl font-anthroSemibold md:text-6xl ">
+      <h1 className="text-white max-w-4xl text-5xl font-anthroSemibold md:text-6xl mt-5">
         Discover the Web Faster with{" "}
         <span
           className="text-orange-500/20

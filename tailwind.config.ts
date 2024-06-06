@@ -68,6 +68,11 @@ const config = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+         gradient: {
+          to: {
+            backgroundPosition: "var(--bg-size) 0",
+          },
+        },
         text: {
         "0%, 100%": {
           "background-size": "200% 200%",
@@ -106,7 +111,7 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         "shimmer": "shimmer 2s linear infinite",
         "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
-
+        gradient: "gradient 8s linear infinite",
       },
     },
   },

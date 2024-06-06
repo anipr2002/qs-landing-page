@@ -5,6 +5,9 @@ import { RoughNotation } from "react-rough-notation";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import AnimatedGradientText from "@/components/magicui/animated-gradient-text";
+import { ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 // import { useMouseStore } from "@/app/store/mouse";
 const Intro = () => {
   const { toast } = useToast();
@@ -24,7 +27,20 @@ const Intro = () => {
 
   return (
     <>
-      <Badge text="🎉 Introduing Quick Surf!" />
+      {/* <Badge text="🎉 Introduing Quick Surf!" /> */}
+
+      <AnimatedGradientText>
+        🎉 <hr className="mx-2 h-4 w-[1px] shrink-0 bg-white" />{" "}
+        <span
+          className={cn(
+            `inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-[#9c40ff] to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-transparent`
+          )}
+        >
+          Introducing Magic UI
+        </span>
+        <ChevronRight className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+      </AnimatedGradientText>
+
       <h1 className="text-white max-w-4xl text-5xl font-anthroSemibold md:text-6xl ">
         Discover the Web Faster with{" "}
         <span

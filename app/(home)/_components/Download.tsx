@@ -51,7 +51,7 @@ const Download = () => {
   return (
     <div className="flex flex-col w-full justify-center items-center mt-10">
       <div className="flex flex-col rounded-xl  w-fit h-fit bg-zinc-300">
-        <div className="flex text-white font-aber text-2xl items-center">
+        <div className="flex text-white font-aber text-2xl items-center justify-center">
           <a
             className="py-5 px-9 bg-orange-500 hover:bg-orange-300 transition ease-in rounded-tl-xl"
             href="/Quick-surf_0.0.1_x64-setup.exe"
@@ -74,7 +74,7 @@ const Download = () => {
           </a>
           {/* <div className="bg-orange-500 py-5 w-fit"> | </div> */}
           <div className="py-5 px-6 bg-orange-500 hover:bg-orange-300 transition ease-in rounded-tr-xl">
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger>
                 <span className="flex items-center">
                   {selected} <DoubleArrowDownIcon />
@@ -105,7 +105,8 @@ const Download = () => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
+            WINDOWS
           </div>
         </div>
 
@@ -114,9 +115,9 @@ const Download = () => {
             OPEN BETA 0.0.1{" "}
           </div>
           <div className="w-fit flex ">
-            <FaApple className="" />
+            {/* <FaApple className="" /> */}
             <FaWindows className="mx-2" />
-            <FaLinux className="" />
+            {/* <FaLinux className="" /> */}
           </div>
         </div>
       </div>
